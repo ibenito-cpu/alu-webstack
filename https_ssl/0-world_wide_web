@@ -2,15 +2,15 @@
 # Displays information about subdomains
 # shellcheck disable=SC2086
 
-get_subdomain() {
-    dig $2.$1 +noall +answer | awk '{print "The subdomain '"$2"' is a " $4 " record and points to " $5}'
+get_sub() {
+    dig $2.$1 +noall +answer | awk -v host="$2" '{print "The subdomain " host " is a " $4 " record and points to " $5}'
 }
 
 if [ $# -eq 1 ]; then
-    get_subdomain $1 www
-    get_subdomain $1 lb-01
-    get_subdomain $1 web-01
-    get_subdomain $1 web-02
+    get_sub $1 www
+    get_sub $1 lb-01
+    get_sub $1 web-01
+    get_sub $1 web-02
 elif [ $# -eq 2 ]; then
-    get_subdomain $1 $2
+    get_sub $1 $2
 fi
