@@ -2,8 +2,8 @@
 # Displays information about subdomains
 # shellcheck disable=SC2086
 
-function get_subdomain() {
-    dig $2.$1 +noall +answer | awk -v sub="$2" '{print "The subdomain " sub " is a " $4 " record and points to " $5}'
+get_subdomain() {
+    dig $2.$1 +noall +answer | awk -v sub_name="$2" '{print "The subdomain " sub_name " is a " $4 " record and points to " $5}'
 }
 
 if [ $# -eq 1 ]; then
