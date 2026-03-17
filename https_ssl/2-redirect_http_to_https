@@ -1,0 +1,25 @@
+global
+    log /dev/log local0
+    user haproxy
+    group haproxy
+    daemon
+    maxconn 2048
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
+
+frontend https_frontend
+    bind *:443 ssl crt /etc/haproxy/certs/holberton.online.pem
+    http-request set-header X-Forwarded-Proto https
+    default_backend web_servers
+
+backend web_servers
+    balance roundrobin
+    server 6972-web-01 35.173.178.76:80 check
+    server 6972-web-02 54.174.21.203:80 check
